@@ -4,3 +4,6 @@
 *.pyc
 *.pyo
 *$py.class
+/django_bootstrap_pagination.egg-info
+/dist
+/build
