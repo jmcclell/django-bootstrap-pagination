@@ -1,0 +1,6 @@
+.settings
+.project
+.pydevproject
+*.pyc
+*.pyo
+*$py.class
