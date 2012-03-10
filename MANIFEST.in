@@ -1,0 +1,2 @@
+include LICENSE README.markdown
+recursive-include bootstrap-pagination *.py *.html
