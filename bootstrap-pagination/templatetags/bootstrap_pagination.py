@@ -36,13 +36,14 @@ def get_page_url(page_num, current_app, url_view_name, url_extra_args, url_extra
     
     return url
       
-@register.filter(is_safe=True)
+@register.filter()
 @stringfilter
 def cat(value, arg): 
      """ 
      Concatenates value with argument 
      """ 
      return u"%s%s" % (value, force_unicode(arg)) 
+cat.is_safe = True
 
 @register.filter
 def hash(h,key):
