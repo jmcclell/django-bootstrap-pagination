@@ -8,7 +8,7 @@ readme.close()
 
 setup(
     name='django-bootstrap-pagination',
-    version='0.1.3',
+    version='0.1.5',
     keywords="django bootstrap pagination templatetag",
     author=u'Jason McClellan',
     author_email='jason@jasonmccllelan.net',
