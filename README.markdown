@@ -5,9 +5,13 @@ work seamlessly with Django Page objects. By passing in a Page object and
 one or more optional arguments, Bootstrap pagination bars and pagers can
 be rendered with very little effort.
 
+Compatible with Django 1.3+
+
 ## Installation
 
 ### PIP
+
+This will install the latest stable release from PyPi.
 
 ```
     pip install django-bootstrap-pagination
@@ -15,9 +19,14 @@ be rendered with very little effort.
 
 ### Download
 
-Download the files from:
+Download the latest stable distribution from:
+
+http://pypi.python.org/pypi?:action=display&name=django-bootstrap-pagination
+
+Download the latest development version from:
 
 github @ http://www.github.com/jmcclell/django-bootstrap-pagination
+
 
 ```
     setup.py install
