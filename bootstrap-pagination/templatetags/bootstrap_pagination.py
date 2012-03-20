@@ -166,11 +166,10 @@ class BootstrapPaginationNode(Node):
         page_range = range(range_min, range_max + 1)     
         
         # Generate our URLs (page range + special urls for first, previous, next, and last)        
-        page_urls = {}        
+        page_urls = []     
         for curpage in page_range:
             url = get_page_url(curpage, context.current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name)
-
-            page_urls[curpage] = url            
+            page_urls.append((curpage, url))            
         
         first_page_url = None
         if current_page > 1:

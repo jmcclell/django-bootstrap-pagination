@@ -11,7 +11,7 @@
             <a title="Previous Page" href="{{ previous_page_url|default:"#" }}">{{ previous_label }}</a>
         </li>
     {% endif %}    
-    {% for pagenum, url in page_urls.items %}
+    {% for pagenum, url in page_urls %}
         {% if page.number == pagenum %}            
             <li class="active">
                 <a title="Current Page" href="#">{{ pagenum }}</a>
