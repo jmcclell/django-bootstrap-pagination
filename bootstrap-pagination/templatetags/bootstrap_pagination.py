@@ -17,7 +17,10 @@ def strToBool(val):
     """
     return val.lower() == "true"
       
-def get_page_url(page_num, current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name):        
+def get_page_url(page_num, current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name):       
+    """
+    Helper function to return a valid URL string given the template tag parameters
+    """ 
     if url_view_name is not None:
         # Add page param to the kwargs list. Overrides any previously set parameter of the same name.              
         url_extra_kwargs[url_param_name] = page_num
