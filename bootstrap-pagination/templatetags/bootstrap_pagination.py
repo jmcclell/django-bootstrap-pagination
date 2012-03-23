@@ -54,7 +54,7 @@ class BootstrapPagerNode(Node):
                 try:
                     kwargs[argname] = argvalue.resolve(context)   
                 except template.VariableDoesNotExist:
-                    kwargs[argname] = str(argvalue)
+                    kwargs[argname] = None
                     
         centered = strToBool(kwargs.get("centered", "false"))
         previous_label = str(kwargs.get("previous_label", "Previous Page"))
@@ -109,7 +109,7 @@ class BootstrapPaginationNode(Node):
                 try:
                     kwargs[argname] = argvalue.resolve(context)   
                 except template.VariableDoesNotExist:
-                    kwargs[argname] = str(argvalue)
+                    kwargs[argname] = None
         
         # Unpack our keyword arguments, substituting defaults where necessary
         
