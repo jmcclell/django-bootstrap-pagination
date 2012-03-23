@@ -22,7 +22,7 @@ Installation
 
 Download the latest stable distribution from:
 
-http://pypi.python.org/pypi?:action=display&name=django-bootstrap-pagination
+http://pypi.python.org/pypi/django-bootstrap-pagination
 
 Download the latest development version from:
 
