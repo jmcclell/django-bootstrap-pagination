@@ -1,15 +1,13 @@
 import re
 
 from django.core.urlresolvers import reverse, NoReverseMatch
-from django.template import Context, Node, Library
+from django.template import Context, Node, Library, TemplateSyntaxError, VariableDoesNotExist
 from django.template.loader import get_template
-from django.template import FilterExpression
-from django.template.defaultfilters import stringfilter
-from django.utils.encoding import force_unicode
 from django.conf import settings
 from django.http import QueryDict
 
 register = Library()
+
 
 def strToBool(val):
     """
@@ -18,10 +16,11 @@ def strToBool(val):
     """
     return val.lower() == "true"
 
+
 def get_page_url(page_num, current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name, url_get_params):
     """
     Helper function to return a valid URL string given the template tag parameters
-    """ 
+    """
     if url_view_name is not None:
         # Add page param to the kwargs list. Overrides any previously set parameter of the same name.
         url_extra_kwargs[url_param_name] = page_num
@@ -44,8 +43,9 @@ def get_page_url(page_num, current_app, url_view_name, url_extra_args, url_extra
 
     if (len(url_get_params) > 0):
         url += '?' + url_get_params.urlencode()
-        
+
     return url
+
 
 class BootstrapPagerNode(Node):
     def __init__(self, page, kwargs):
@@ -54,15 +54,15 @@ class BootstrapPagerNode(Node):
 
     def render(self, context):
         page = self.page.resolve(context)
-        kwargs = self.kwargs
+        kwargs = {}
 
          # Retrieve variable instances from context where necessary
-        for argname, argvalue in kwargs.items():
+        for argname, argvalue in self.kwargs.items():
             try:
                 kwargs[argname] = argvalue.resolve(context)
             except AttributeError:
                 kwargs[argname] = argvalue
-            except template.VariableDoesNotExist:
+            except VariableDoesNotExist:
                 kwargs[argname] = None
 
         centered = strToBool(kwargs.get("centered", "false"))
@@ -88,7 +88,6 @@ class BootstrapPagerNode(Node):
         if page.has_next():
             next_page_url = get_page_url(page.next_page_number(), context.current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name, url_get_params)
 
-
         return get_template("bootstrap-pagination/pager.html").render(
             Context({
                 'page': page,
@@ -101,6 +100,7 @@ class BootstrapPagerNode(Node):
                 'next_page_url': next_page_url
             }, autoescape=False))
 
+
 class BootstrapPaginationNode(Node):
     """
     Render the Bootstrap pagination bar with the given parameters
@@ -111,15 +111,15 @@ class BootstrapPaginationNode(Node):
 
     def render(self, context):
         page = self.page.resolve(context)
-        kwargs = self.kwargs
+        kwargs = {}
 
         # Retrieve variable instances from context where necessary
-        for argname, argvalue in kwargs.items():
+        for argname, argvalue in self.kwargs.items():
             try:
                 kwargs[argname] = argvalue.resolve(context)
             except AttributeError:
                 kwargs[argname] = argvalue
-            except template.VariableDoesNotExist:
+            except VariableDoesNotExist:
                 kwargs[argname] = None
 
         # Unpack our keyword arguments, substituting defaults where necessary
@@ -195,7 +195,6 @@ class BootstrapPaginationNode(Node):
         if page.has_next():
             next_page_url = get_page_url(page.next_page_number(), context.current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name, url_get_params)
 
-
         return get_template("bootstrap-pagination/pagination.html").render(
             Context({
                 'page': page,
@@ -212,6 +211,7 @@ class BootstrapPaginationNode(Node):
                 'previous_page_url': previous_page_url,
                 'next_page_url': next_page_url
             }, autoescape=False))
+
 
 @register.tag
 def bootstrap_paginate(parser, token):
@@ -297,9 +297,7 @@ def bootstrap_paginate(parser, token):
             name, value = match.groups()
             kwargs[name] = parser.compile_filter(value)
 
-
     return BootstrapPaginationNode(page, kwargs)
-
 
 
 @register.tag
@@ -365,6 +363,5 @@ def bootstrap_pager(parser, token):
                 raise TemplateSyntaxError("Malformed arguments to bootstrap_pagination pager tag")
             name, value = match.groups()
             kwargs[name] = parser.compile_filter(value)
-
 
     return BootstrapPagerNode(page, kwargs)
