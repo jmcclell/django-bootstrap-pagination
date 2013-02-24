@@ -1,4 +1,5 @@
 import re
+import ast
 
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.template import Context, Node, Library, TemplateSyntaxError, VariableDoesNotExist
@@ -77,7 +78,7 @@ class BootstrapPagerNode(Node):
 
         url_param_name = str(kwargs.get("url_param_name", "page"))
         url_extra_args = kwargs.get("url_extra_args", [])
-        url_extra_kwargs = kwargs.get("url_extra_kwargs", {})
+        url_extra_kwargs = ast.literal_eval(kwargs.get("url_extra_kwargs", '{}'))
         url_get_params = kwargs.get("url_get_params", context['request'].GET)
 
         previous_page_url = None
@@ -144,7 +145,7 @@ class BootstrapPaginationNode(Node):
 
         url_param_name = str(kwargs.get("url_param_name", "page"))
         url_extra_args = kwargs.get("url_extra_args", [])
-        url_extra_kwargs = kwargs.get("url_extra_kwargs", {})
+        url_extra_kwargs = ast.literal_eval(kwargs.get("url_extra_kwargs", '{}'))
         url_get_params = kwargs.get("url_get_params", context['request'].GET)
 
         # Generage our viewable page range
