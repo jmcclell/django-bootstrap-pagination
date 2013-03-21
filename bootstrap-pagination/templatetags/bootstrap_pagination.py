@@ -131,6 +131,12 @@ class BootstrapPaginationNode(Node):
         if alignment not in ["left", "center", "right"]:
             raise Exception("Optional argument \"alignment\" expecting one of \"left\", \"center\", or \"right\"")
 
+        size = kwargs.get("size", None)
+        if size is not None:
+            size = str(size.lower())
+            if size not in ["mini", "small", "large"]:
+                raise Exception("Optional argument \"size\" expecting one of \"mini\", \"small\", or \"large\"")
+
         show_prev_next = strToBool(kwargs.get("show_prev_next", "true"))
         previous_label = str(kwargs.get("previous_label", "&larr;"))
         next_label = str(kwargs.get("next_label", "&rarr;"))
@@ -199,6 +205,7 @@ class BootstrapPaginationNode(Node):
             Context({
                 'page': page,
                 'alignment': alignment,
+                'size': size,
                 'show_prev_next': show_prev_next,
                 'show_first_last': show_first_last,
                 'previous_label': previous_label,
@@ -232,6 +239,9 @@ def bootstrap_paginate(parser, token):
 
         alignment - Accepts "left", "center", and "right". Defaults to
                     "center"
+
+        size - Accepts "mini", "small", and "large". Defaults to
+                    None which is the standard size.
 
         show_prev_next - Accepts "true" or "false". Determines whether or not
                         to show the previous and next page links. Defaults to

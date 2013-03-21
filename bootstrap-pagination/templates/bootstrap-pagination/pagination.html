@@ -1,5 +1,5 @@
 {% load bootstrap_pagination %}
-<div class="pagination {% if alignment == "center" %}pagination-centered{% endif %}{% if alignment == "right" %}pagination-right{% endif %} {% block extra_classes %}{% endblock %}">    
+<div class="pagination {% if size == "mini" %}pagination-mini{% endif %}{% if size == "small" %}pagination-small{% endif %}{% if size == "large" %}pagination-large{% endif %} {% if alignment == "center" %}pagination-centered{% endif %}{% if alignment == "right" %}pagination-right{% endif %} {% block extra_classes %}{% endblock %}">    
     <ul>    
     {% if show_first_last %}
          <li {% if not page.has_previous %}class="disabled"{% endif %}>         
