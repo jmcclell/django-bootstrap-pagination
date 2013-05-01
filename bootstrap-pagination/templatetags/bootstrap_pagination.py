@@ -186,11 +186,11 @@ class BootstrapPaginationNode(Node):
             page_urls.append((curpage, url))
 
         first_page_url = None
-        if current_page > 1:
+        if current_page >= 1:
             first_page_url = get_page_url(1, context.current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name, url_get_params)
 
         last_page_url = None
-        if current_page < page_count:
+        if current_page <= page_count:
             last_page_url = get_page_url(page_count, context.current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name, url_get_params)
 
         previous_page_url = None
