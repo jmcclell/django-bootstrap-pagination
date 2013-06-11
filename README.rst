@@ -10,6 +10,8 @@ be rendered with very little effort.
 
 Compatible with Django 1.3+
 
+.. contents ::
+
 ------------
 Installation
 ------------
@@ -53,6 +55,9 @@ the pagination tags:
 ==================
 bootstrap_paginate
 ==================
+
+Takes a `Django Paginator instance <https://docs.djangoproject.com/en/dev/topics/pagination/>`_
+as an argument to build a jump to page element.
 
 **All Optional Arguments**
 
