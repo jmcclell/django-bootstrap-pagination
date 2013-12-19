@@ -65,7 +65,6 @@ class BootstrapPagerNode(Node):
             except VariableDoesNotExist:
                 kwargs[argname] = None
 
-        centered = strToBool(kwargs.get("centered", "false"))
         previous_label = str(kwargs.get("previous_label", "Previous Page"))
         next_label = str(kwargs.get("next_label", "Next Page"))
         previous_title = str(kwargs.get("previous_title", "Previous Page"))
@@ -91,7 +90,6 @@ class BootstrapPagerNode(Node):
         return get_template("bootstrap_pagination/pager.html").render(
             Context({
                 'page': page,
-                'centered': centered,
                 'previous_label': previous_label,
                 'next_label': next_label,
                 'previous_title': previous_title,
@@ -127,15 +125,11 @@ class BootstrapPaginationNode(Node):
         if range_length is not None:
             range_length = int(range_length)
 
-        alignment = str(kwargs.get("alignment", "center")).lower()
-        if alignment not in ["left", "center", "right"]:
-            raise Exception("Optional argument \"alignment\" expecting one of \"left\", \"center\", or \"right\"")
-
         size = kwargs.get("size", None)
         if size is not None:
             size = str(size.lower())
-            if size not in ["mini", "small", "large"]:
-                raise Exception("Optional argument \"size\" expecting one of \"mini\", \"small\", or \"large\"")
+            if size not in ["small", "large"]:
+                raise Exception("Optional argument \"size\" expecting one of \"small\", or \"large\"")
 
         show_prev_next = strToBool(kwargs.get("show_prev_next", "true"))
         previous_label = str(kwargs.get("previous_label", "&larr;"))
@@ -204,7 +198,6 @@ class BootstrapPaginationNode(Node):
         return get_template("bootstrap_pagination/pagination.html").render(
             Context({
                 'page': page,
-                'alignment': alignment,
                 'size': size,
                 'show_prev_next': show_prev_next,
                 'show_first_last': show_first_last,
@@ -224,11 +217,11 @@ class BootstrapPaginationNode(Node):
 def bootstrap_paginate(parser, token):
     """
     Renders a Page object as a Twitter Bootstrap styled pagination bar.
-    Compatible with Bootstrap 2.x only.
+    Compatible with Bootstrap 3.x only.
 
     Example::
 
-        {% bootstrap_paginate page_obj range=10 alignment="left" %}
+        {% bootstrap_paginate page_obj range=10 %}
 
 
     Named Parameters::
@@ -237,10 +230,8 @@ def bootstrap_paginate(parser, token):
                 10 page numbers will display at any given time) Defaults to
                 None, which shows all pages.
 
-        alignment - Accepts "left", "center", and "right". Defaults to
-                    "center"
 
-        size - Accepts "mini", "small", and "large". Defaults to
+        size - Accepts "small", and "large". Defaults to
                     None which is the standard size.
 
         show_prev_next - Accepts "true" or "false". Determines whether or not
@@ -318,12 +309,11 @@ def bootstrap_pager(parser, token):
 
     Example::
 
-        {% bootstrap_pager page_obj alignment="left" %}
+        {% bootstrap_pager page_obj %}
 
 
     Named Parameters::
 
-        centered - Accepts "true" or "false" (defaults to "false")
 
         previous_label - The label to show for the Previous link (defaults to "Previous Page")
 
