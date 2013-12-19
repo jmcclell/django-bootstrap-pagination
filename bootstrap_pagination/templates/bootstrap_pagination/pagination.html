@@ -1,0 +1,36 @@
+{% load bootstrap_pagination %}
+<div class="pagination {% if size == "mini" %}pagination-mini{% endif %}{% if size == "small" %}pagination-small{% endif %}{% if size == "large" %}pagination-large{% endif %} {% if alignment == "center" %}pagination-centered{% endif %}{% if alignment == "right" %}pagination-right{% endif %} {% block extra_classes %}{% endblock %}">    
+    <ul>    
+    {% if show_first_last %}
+         <li {% if not page.has_previous %}class="disabled"{% endif %}>         
+            <a title="First Page" href="{{ first_page_url|default:"#" }}">{{first_label}}</a>
+         </li>
+    {% endif %}
+    {% if show_prev_next %}
+        <li {% if not page.has_previous %}class="disabled"{% endif %}>
+            <a title="Previous Page" href="{{ previous_page_url|default:"#" }}">{{ previous_label }}</a>
+        </li>
+    {% endif %}    
+    {% for pagenum, url in page_urls %}
+        {% if page.number == pagenum %}            
+            <li class="active">
+                <a title="Current Page" href="#">{{ pagenum }}</a>
+            </li>            
+        {% else %}
+            <li>          
+                <a title="Page {{ pagenum }} of {{ page.paginator.num_pages }}" href="{{ url }}">{{ pagenum }}</a>
+            </li>   
+        {% endif %}        
+    {% endfor %}
+    {% if show_prev_next %}
+        <li {% if not page.has_next %}class="disabled"{% endif %}>
+            <a title="Next Page" href="{{ next_page_url|default:"#" }}">{{ next_label }}</a>
+        </li>
+    {% endif %}   
+    {% if show_first_last %}
+        <li {% if not page.has_next %}class="disabled"{% endif %}>            
+            <a title="Last Page" href="{{ last_page_url|default:"#" }}">{{last_label}}</a>                       
+        </li>      
+    {% endif %}
+    </ul> 
+</div>

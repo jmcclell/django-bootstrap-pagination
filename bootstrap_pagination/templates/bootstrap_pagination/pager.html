@@ -1,0 +1,12 @@
+<ul class="pager">     
+      {% if page.has_previous %}     
+      <li{% if not centered %} class="previous"{% endif %}>
+          <a title="{{ previous_title }}" href="{{ previous_page_url|default:"#" }}">{{ previous_label }}</a>
+      </li>          
+      {% endif %}
+      {% if page.has_next %}
+      <li{% if not centered %} class="next"{% endif %}>
+         <a title="{{ next_title }}" href="{{ next_page_url|default:"#" }}">{{ next_label }}</a>
+      </li>
+      {% endif %}
+  </ul>         
