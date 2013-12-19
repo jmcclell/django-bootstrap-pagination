@@ -43,7 +43,7 @@ Make sure you include bootstrap-pagination in your installed_apps list in settin
 
 
   INSTALLED_APPS = (
-      'bootstrap-pagination',
+      'bootstrap_pagination',
   )
 
 

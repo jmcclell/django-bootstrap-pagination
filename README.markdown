@@ -35,11 +35,11 @@ github @ http://www.github.com/jmcclell/django-bootstrap-pagination
 
 ### Setup
 
-Make sure you include bootstrap-pagination in your installed_apps list in settings.py:
+Make sure you include bootstrap_pagination in your installed_apps list in settings.py:
 
 ```
     INSTALLED_APPS = (
-        'bootstrap-pagination',
+        'bootstrap_pagination',
     )
 ```
 
