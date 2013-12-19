@@ -1,5 +1,7 @@
 ## Django Bootstrap Pagination
 
+**Note:** This version is now considered stable. It is compatible with Bootstrap 2.x only! Please use the master branch for Bootstrap 3 support.
+
 This application serves to make using Twitter's Bootstrap Pagination styles
 work seamlessly with Django Page objects. By passing in a Page object and
 one or more optional arguments, Bootstrap pagination bars and pagers can
