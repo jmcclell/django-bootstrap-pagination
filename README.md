@@ -52,6 +52,12 @@ the pagination tags:
     {% load bootstrap_pagination %}
 ```
 
+Finally, make sure that you have the request context processor enabled:
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    **"django.core.context_processors.request",**
+)
+
 # bootstrap_paginate
 
 **All Optional Arguments**
