@@ -44,7 +44,7 @@ def get_page_url(page_num, current_app, url_view_name, url_extra_args, url_extra
     if (len(url_get_params) > 0):
         url += '?' + url_get_params.urlencode()
 
-    if (url_anchor):
+    if (url_anchor is not None):
         url += '#' + url_anchor
 
     return url
