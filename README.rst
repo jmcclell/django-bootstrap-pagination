@@ -203,6 +203,8 @@ url_extra_kwargs
   there is a named "page" argument in the URL referenced by **url_view_name**. This allows
   us to use pretty pagination URLs such as "/page/1"
 
+url_anchor
+  The anchor to use in URLs. Defaults to None.
 
 **Usage**
 
