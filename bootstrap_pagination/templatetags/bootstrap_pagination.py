@@ -161,8 +161,8 @@ class BootstrapPaginationNode(Node):
                 range_length = page_count
 
             range_length -= 1
-            range_min = max(current_page - (range_length / 2), 1)
-            range_max = min(current_page + (range_length / 2), page_count)
+            range_min = max(current_page - (range_length // 2), 1)
+            range_max = min(current_page + (range_length // 2), page_count)
             range_diff = range_max - range_min
             if range_diff < range_length:
                 shift = range_length - range_diff
