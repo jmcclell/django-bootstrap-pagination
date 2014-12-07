@@ -28,7 +28,7 @@ def get_page_url(page_num, current_app, url_view_name, url_extra_args, url_extra
        # This bit of code comes from the default django url tag
         try:
             url = reverse(url_view_name, args=url_extra_args, kwargs=url_extra_kwargs, current_app=current_app)
-        except NoReverseMatch, e:
+        except NoReverseMatch as e:
             if settings.SETTINGS_MODULE:
                 project_name = settings.SETTINGS_MODULE.split('.')[0]
                 url = reverse(project_name + '.' + url_view_name, args=url_extra_args, kwargs=url_extra_kwargs, current_app=current_app)
