@@ -1,6 +1,7 @@
 .settings
 .project
 .pydevproject
+.ropeproject
 *.pyc
 *.pyo
 *$py.class
