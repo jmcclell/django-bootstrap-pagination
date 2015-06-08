@@ -10,7 +10,17 @@ work seamlessly with Django Page objects. By passing in a Page object and
 one or more optional arguments, Bootstrap pagination bars and pagers can
 be rendered with very little effort.
 
-Compatible with Django 1.3+
+Compatible with Django **1.3+**
+
+### Looking for collaborator(s)
+
+I have not had as much time as I would like to maintain this project. Since it is being used by quite a few, I would love to have someone help out as an additional maintainer. If anyone is interested, shoot me a note.
+
+High priority tasks:
+
+- [ ] Full testing suite
+- [ ] TravisCI setup to run said tests for each PR (all supported versions of Python and Django)
+- [ ] Python 3 support (maintaing backwards compatibility if possible, not required)
 
 ## Installation
 
