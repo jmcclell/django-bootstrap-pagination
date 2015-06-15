@@ -30,5 +30,5 @@ class PaginateTestCase(unittest.TestCase):
         html = lxml.html.fragment_fromstring(template.render(c))
         self.assertEqual(html.get('class'), 'pagination')
         self.assertEqual(
-            html.cssselect('a[title=\"Current Page\"]')[0].text.strip(),
-                         '2')
+            html.cssselect('[title=\"Current Page\"]')[0].text.strip(),
+            '2')
