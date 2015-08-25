@@ -194,7 +194,8 @@ simply provides a Previous and Next link.
                          and thus it is expected that there is a named "page" argument in the
                          URL referenced by **url_view_name**. This allows us to use pretty
                          pagination URLs such as "/page/1"
-                 
+- **url_anchor** - The anchor to use in URLs. Defaults to None
+
 **Usage**
 
 Usage is basically the same as for bootstrap_paginate. The simplest usage is:
