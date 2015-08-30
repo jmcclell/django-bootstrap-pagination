@@ -1,0 +1,42 @@
+# This file is distributed under the same license as the django-bootstrap-pagination package.
+msgid ""
+msgstr ""
+"Project-Id-Version: django-bootstrap-pagination\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-18 15:22+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Quentin CARON <quentin.caron@gmail.com>\n"
+"Language-Team: French\n"
+"Language: French\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: templates/bootstrap_pagination/pagination.html:5
+msgid "First page"
+msgstr "Première page"
+
+#: templates/bootstrap_pagination/pagination.html:10
+msgid "Previous page"
+msgstr "Page précédente"
+
+#: templates/bootstrap_pagination/pagination.html:16
+msgid "Current page"
+msgstr "Page courante"
+
+#: templates/bootstrap_pagination/pagination.html:20
+msgid "Page"
+msgstr "Page"
+
+#: templates/bootstrap_pagination/pagination.html:20
+msgid "of"
+msgstr "sur"
+
+#: templates/bootstrap_pagination/pagination.html:26
+msgid "Next page"
+msgstr "Page suivante"
+
+#: templates/bootstrap_pagination/pagination.html:31
+msgid "Last page"
+msgstr "Dernière page"

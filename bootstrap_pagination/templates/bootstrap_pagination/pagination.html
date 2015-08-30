@@ -1,34 +1,34 @@
-{% load bootstrap_pagination %}
+{% load bootstrap_pagination i18n %}
 <ul class="pagination{% if size == "small" %} pagination-sm{% endif %}{% if size == "large" %} pagination-lg{% endif %}{% block extra_classes %}{% endblock %}">
 {% if show_first_last %}
-     <li {% if not page.has_previous %}class="disabled"{% endif %}>
-        <a title="First Page" href="{{ first_page_url|default:"#" }}">{{first_label}}</a>
-     </li>
+    <li {% if not page.has_previous %}class="disabled"{% endif %}>
+        <a title="{% trans "First page" %}" href="{{ first_page_url|default:"#" }}">{{first_label}}</a>
+    </li>
 {% endif %}
 {% if show_prev_next %}
     <li {% if not page.has_previous %}class="disabled"{% endif %}>
-        <a title="Previous Page" href="{{ previous_page_url|default:"#" }}">{{ previous_label }}</a>
+        <a title="{% trans "Previous page" %}" href="{{ previous_page_url|default:"#" }}">{{ previous_label }}</a>
     </li>
 {% endif %}
 {% for pagenum, url in page_urls %}
     {% if page.number == pagenum %}
         <li class="active">
-            <a title="Current Page" href="#">{{ pagenum }}</a>
+            <a title="{% trans "Current page" %}" href="#">{{ pagenum }}</a>
         </li>
     {% else %}
         <li>
-            <a title="Page {{ pagenum }} of {{ page.paginator.num_pages }}" href="{{ url }}">{{ pagenum }}</a>
+            <a title="{% trans "Page" %} {{ pagenum }} {% trans "of" %} {{ page.paginator.num_pages }}" href="{{ url }}">{{ pagenum }}</a>
         </li>
     {% endif %}
 {% endfor %}
 {% if show_prev_next %}
     <li {% if not page.has_next %}class="disabled"{% endif %}>
-        <a title="Next Page" href="{{ next_page_url|default:"#" }}">{{ next_label }}</a>
+        <a title="{% trans "Next page" %}" href="{{ next_page_url|default:"#" }}">{{ next_label }}</a>
     </li>
 {% endif %}
 {% if show_first_last %}
     <li {% if not page.has_next %}class="disabled"{% endif %}>
-        <a title="Last Page" href="{{ last_page_url|default:"#" }}">{{last_label}}</a>
+        <a title="{% trans "Last page" %}" href="{{ last_page_url|default:"#" }}">{{last_label}}</a>
     </li>
 {% endif %}
 </ul>
