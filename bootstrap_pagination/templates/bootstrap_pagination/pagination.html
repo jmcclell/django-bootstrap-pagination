@@ -1,19 +1,31 @@
 {% load bootstrap_pagination %}
 <ul class="pagination{% if size == "small" %} pagination-sm{% endif %}{% if size == "large" %} pagination-lg{% endif %}{% block extra_classes %}{% endblock %}">
 {% if show_first_last %}
-     <li {% if not page.has_previous %}class="disabled"{% endif %}>
+    {% if not page.has_previous %}
+      <li class="disabled">
+        <span>{{ first_label }}</span>
+      </li>
+    {% else %}
+      <li>
         <a title="First Page" href="{{ first_page_url|default:"#" }}">{{first_label}}</a>
-     </li>
+      </li>
+    {% endif %}
 {% endif %}
 {% if show_prev_next %}
-    <li {% if not page.has_previous %}class="disabled"{% endif %}>
+    {% if not page.has_previous %}
+      <li class="disabled">
+        <span>{{ previous_label }}</span>
+      </li>
+    {% else %}
+      <li>
         <a title="Previous Page" href="{{ previous_page_url|default:"#" }}">{{ previous_label }}</a>
-    </li>
+      </li>
+    {% endif %}
 {% endif %}
 {% for pagenum, url in page_urls %}
     {% if page.number == pagenum %}
         <li class="active">
-            <a title="Current Page" href="#">{{ pagenum }}</a>
+            <span title="Current Page">{{ pagenum }}</span>
         </li>
     {% else %}
         <li>
@@ -22,13 +34,25 @@
     {% endif %}
 {% endfor %}
 {% if show_prev_next %}
-    <li {% if not page.has_next %}class="disabled"{% endif %}>
+    {% if not page.has_next %}
+      <li class="disabled">
+        <span>{{ next_label }}</span>
+      </li>
+    {% else %}
+      <li>
         <a title="Next Page" href="{{ next_page_url|default:"#" }}">{{ next_label }}</a>
-    </li>
+      </li>
+    {% endif %}
 {% endif %}
 {% if show_first_last %}
-    <li {% if not page.has_next %}class="disabled"{% endif %}>
+    {% if not page.has_next %}
+      <li class="disabled">
+        <span>{{ last_label }}</span>
+      </li>
+    {% else %}
+      <li>
         <a title="Last Page" href="{{ last_page_url|default:"#" }}">{{last_label}}</a>
-    </li>
+      </li>
+    {% endif %}
 {% endif %}
 </ul>
