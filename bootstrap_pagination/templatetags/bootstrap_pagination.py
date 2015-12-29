@@ -141,6 +141,7 @@ class BootstrapPaginationNode(Node):
         show_first_last = strToBool(kwargs.get("show_first_last", "false"))
         first_label = str(kwargs.get("first_label", "&laquo;"))
         last_label = str(kwargs.get("last_label", "&raquo;"))
+        show_index_range = strToBool(kwargs.get("show_index_range", "false"))
 
         url_view_name = kwargs.get("url_view_name", None)
         if url_view_name is not None:
@@ -181,8 +182,13 @@ class BootstrapPaginationNode(Node):
         # Generate our URLs (page range + special urls for first, previous, next, and last)
         page_urls = []
         for curpage in page_range:
+            if curpage == page.paginator.num_pages:
+                index_range = "%s-%s" % (1 + (curpage - 1) * page.paginator.per_page, len(page.paginator.object_list), )
+            else:
+                index_range = "%s-%s" % (1 + (curpage - 1) * page.paginator.per_page, curpage * page.paginator.per_page, )
+                
             url = get_page_url(curpage, context.current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name, url_get_params, url_anchor)
-            page_urls.append((curpage, url))
+            page_urls.append((curpage, index_range, url))
 
         first_page_url = None
         if current_page >= 1:
@@ -204,6 +210,7 @@ class BootstrapPaginationNode(Node):
             Context({
                 'page': page,
                 'size': size,
+                'show_index_range': show_index_range,
                 'show_prev_next': show_prev_next,
                 'show_first_last': show_first_last,
                 'previous_label': previous_label,
