@@ -86,6 +86,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
                        (Accepts "true" or "false")
 - **first_label** - The label to use for the First page link
 - **last_label** - The label to use for the Last page link
+- **show_index_range** - Boolean, defaults to "false". If "true" shows index range of items instead of page numbers in the paginator. For example, if paginator is configured for 50 items per page, show_index_range="true" will display [1-50, 51-100, **101-150**, 151-200, 201-250, etc.] rather than [1, 2, **3**, 4, 5, etc.].
 - **url_view_name** - A named URL reference (such as one that might get passed inti the URL
                       template tag) to use as the URL template. Must be resolvable by the
                       reverse() function. **If this option is not specified, the tag simply
