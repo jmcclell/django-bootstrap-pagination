@@ -2,12 +2,12 @@
 <ul class="pagination{% if size == "small" %} pagination-sm{% endif %}{% if size == "large" %} pagination-lg{% endif %}{% block extra_classes %}{% endblock %}">
 {% if show_first_last %}
      <li {% if not page.has_previous %}class="disabled"{% endif %}>
-        <a title="First Page" href="{{ first_page_url|default:"#" }}">{{first_label}}</a>
+        <a title="First Page" href="{{ first_page_url|default:"#"|escape }}">{{first_label}}</a>
      </li>
 {% endif %}
 {% if show_prev_next %}
     <li {% if not page.has_previous %}class="disabled"{% endif %}>
-        <a title="Previous Page" href="{{ previous_page_url|default:"#" }}">{{ previous_label }}</a>
+        <a title="Previous Page" href="{{ previous_page_url|default:"#"|escape }}">{{ previous_label }}</a>
     </li>
 {% endif %}
 {% for pagenum, index_range, url in page_urls %}
@@ -17,18 +17,18 @@
         </li>
     {% else %}
         <li>
-            <a title="Page {{ pagenum }} of {{ page.paginator.num_pages }}" href="{{ url }}">{% if show_index_range %} {{ index_range }} {% else %} {{ pagenum }} {%endif %}</a>
+            <a title="Page {{ pagenum }} of {{ page.paginator.num_pages }}" href="{{ url|escape }}">{% if show_index_range %} {{ index_range }} {% else %} {{ pagenum }} {%endif %}</a>
         </li>
     {% endif %}
 {% endfor %}
 {% if show_prev_next %}
     <li {% if not page.has_next %}class="disabled"{% endif %}>
-        <a title="Next Page" href="{{ next_page_url|default:"#" }}">{{ next_label }}</a>
+        <a title="Next Page" href="{{ next_page_url|default:"#"|escape }}">{{ next_label }}</a>
     </li>
 {% endif %}
 {% if show_first_last %}
     <li {% if not page.has_next %}class="disabled"{% endif %}>
-        <a title="Last Page" href="{{ last_page_url|default:"#" }}">{{last_label}}</a>
+        <a title="Last Page" href="{{ last_page_url|default:"#"|escape }}">{{last_label}}</a>
     </li>
 {% endif %}
 </ul>
