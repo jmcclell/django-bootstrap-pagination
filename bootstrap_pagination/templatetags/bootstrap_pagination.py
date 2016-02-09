@@ -1,10 +1,23 @@
 import re
 
+import django
 from django.core.urlresolvers import reverse, NoReverseMatch
-from django.template import Context, Node, Library, TemplateSyntaxError, VariableDoesNotExist
+from django.template import Node, Library, TemplateSyntaxError, VariableDoesNotExist
 from django.template.loader import get_template
 from django.conf import settings
 from django.http import QueryDict
+from django.utils.html import mark_safe
+
+
+# As of django 1.10, template rendering no longer accepts a context, but 
+# instead accepts only accepts a dict. Up until django 1.8, a context was 
+# actually required. Fortunately Context takes a single dict parameter,
+# so for django >=1.9 we can get away with just passing a unit function.
+if django.VERSION < (1, 9, 0):
+    from django.template import Context
+else:
+    Context = lambda x: x
+
 
 register = Library()
 
@@ -68,10 +81,10 @@ class BootstrapPagerNode(Node):
             except VariableDoesNotExist:
                 kwargs[argname] = None
 
-        previous_label = str(kwargs.get("previous_label", "Previous Page"))
-        next_label = str(kwargs.get("next_label", "Next Page"))
-        previous_title = str(kwargs.get("previous_title", "Previous Page"))
-        next_title = str(kwargs.get("next_title", "Next Page"))
+        previous_label = mark_safe(kwargs.get("previous_label", "Previous Page"))
+        next_label = mark_safe(kwargs.get("next_label", "Next Page"))
+        previous_title = mark_safe(kwargs.get("previous_title", "Previous Page"))
+        next_title = mark_safe(kwargs.get("next_title", "Next Page"))
 
         url_view_name = kwargs.get("url_view_name", None)
         if url_view_name is not None:
@@ -100,7 +113,7 @@ class BootstrapPagerNode(Node):
                 'next_title': next_title,
                 'previous_page_url': previous_page_url,
                 'next_page_url': next_page_url
-            }, autoescape=False))
+            }))
 
 
 class BootstrapPaginationNode(Node):
@@ -136,11 +149,11 @@ class BootstrapPaginationNode(Node):
                 raise Exception("Optional argument \"size\" expecting one of \"small\", or \"large\"")
 
         show_prev_next = strToBool(kwargs.get("show_prev_next", "true"))
-        previous_label = str(kwargs.get("previous_label", "&larr;"))
-        next_label = str(kwargs.get("next_label", "&rarr;"))
+        previous_label = mark_safe(kwargs.get("previous_label", "&larr;"))
+        next_label = mark_safe(kwargs.get("next_label", "&rarr;"))
         show_first_last = strToBool(kwargs.get("show_first_last", "false"))
-        first_label = str(kwargs.get("first_label", "&laquo;"))
-        last_label = str(kwargs.get("last_label", "&raquo;"))
+        first_label = mark_safe(kwargs.get("first_label", "&laquo;"))
+        last_label = mark_safe(kwargs.get("last_label", "&raquo;"))
         show_index_range = strToBool(kwargs.get("show_index_range", "false"))
 
         url_view_name = kwargs.get("url_view_name", None)
@@ -222,7 +235,7 @@ class BootstrapPaginationNode(Node):
                 'last_page_url': last_page_url,
                 'previous_page_url': previous_page_url,
                 'next_page_url': next_page_url
-            }, autoescape=False))
+            }))
 
 
 @register.tag
