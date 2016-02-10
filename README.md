@@ -1,6 +1,9 @@
 [![Stories in Ready](https://badge.waffle.io/jmcclell/django-bootstrap-pagination.png?label=ready)](https://waffle.io/jmcclell/django-bootstrap-pagination)
 [![PyPi version](https://pypip.in/v/django-bootstrap-pagination/badge.png)](https://crate.io/packages/django-bootstrap-pagination/)
 [![PyPi downloads](https://pypip.in/d/django-bootstrap-pagination/badge.png)](https://crate.io/packages/django-bootstrap-pagination/)
+[![Build Status](https://travis-ci.org/jmcclell/django-bootstrap-pagination.png.png?branch=master)](https://travis-ci.org/ondergetekende/livesscrape)
+
+
 ## Django Bootstrap Pagination
 
 **Note:** This version is compatible with Bootstrap 3.x only! Please use the 1.0.x branch for Bootstrap 2 support.
@@ -10,17 +13,7 @@ work seamlessly with Django Page objects. By passing in a Page object and
 one or more optional arguments, Bootstrap pagination bars and pagers can
 be rendered with very little effort.
 
-Compatible with Django **1.3+**
-
-### Looking for collaborator(s)
-
-I have not had as much time as I would like to maintain this project. Since it is being used by quite a few, I would love to have someone help out as an additional maintainer. If anyone is interested, shoot me a note.
-
-High priority tasks:
-
-- [ ] Full testing suite
-- [ ] TravisCI setup to run said tests for each PR (all supported versions of Python and Django)
-- [ ] Python 3 support (maintaing backwards compatibility if possible, not required)
+Compatible with Django **1.2+**
 
 ## Installation
 
