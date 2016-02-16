@@ -8,3 +8,5 @@
 /django_bootstrap_pagination.egg-info
 /dist
 /build
+/htmlcov
+.coverage
