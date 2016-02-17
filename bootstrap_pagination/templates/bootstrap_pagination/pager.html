@@ -3,10 +3,19 @@
       <li{% if not centered %} class="previous"{% endif %}>
           <a title="{{ previous_title }}" href="{{ previous_page_url|default:"#"|escape }}">{{ previous_label }}</a>
       </li>          
+      {% else %}
+      <li class="{% if not centered %} next{% endif %} disabled">
+         <span title="{{ previous_title }}">{{ previous_label }}</span>
+      </li>      
       {% endif %}
+
       {% if page.has_next %}
       <li{% if not centered %} class="next"{% endif %}>
          <a title="{{ next_title }}" href="{{ next_page_url|default:"#"|escape }}">{{ next_label }}</a>
       </li>
+      {% else %}
+      <li title="{{ next_title }}" class="{% if not centered %} next{% endif %} disabled">
+         <span>{{ next_label }}</span>
+      </li>      
       {% endif %}
   </ul>         
