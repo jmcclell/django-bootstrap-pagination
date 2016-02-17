@@ -8,7 +8,7 @@ with open('README.rst', 'rb') as readme:
 
 setup(
     name='django-bootstrap-pagination',
-    version='1.5.2',
+    version='1.6.0',
     keywords="django bootstrap pagination templatetag",
     author=u'Jason McClellan',
     author_email='jason@jasonmccllelan.net',
@@ -20,9 +20,21 @@ setup(
     zip_safe=False,
     include_package_data=True,
     classifiers=[
-        "Development Status :: 3 - Alpha",
-        "Framework :: Django",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
+        "Framework :: Django",
+        "Framework :: Django :: 1.4",
+        "Framework :: Django :: 1.5",
+        "Framework :: Django :: 1.6",
+        "Framework :: Django :: 1.7",
+        "Framework :: Django :: 1.8",
+        "Framework :: Django :: 1.9",
+        "Programming Language :: Python :: 2.6",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.2",
+        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
     ]
 )
