@@ -8,7 +8,12 @@ INSTALLED_APPS = (
     'bootstrap_pagination',
 )
 
-DATABASES = {}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',
+    }
+}
 MIDDLEWARE_CLASSES = ()
 
 ROOT_URLCONF = 'tests.test_settings.urls'

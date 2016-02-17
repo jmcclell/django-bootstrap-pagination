@@ -64,6 +64,15 @@ def get_page_url(page_num, current_app, url_view_name, url_extra_args, url_extra
     return url
 
 
+def get_bootstrap_version():
+    """Helper version to determine the configured version of bootstrap."""
+    version = getattr(settings, 'BOOTSTRAP_VERSION', 3)
+    version = int(version)
+
+    # Clap version between supported versions
+    return max(3, min(version, 4))
+
+
 class BootstrapPagerNode(Node):
     def __init__(self, page, kwargs):
         self.page = page
@@ -105,7 +114,9 @@ class BootstrapPagerNode(Node):
         if page.has_next():
             next_page_url = get_page_url(page.next_page_number(), context.current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name, url_get_params, url_anchor)
 
-        return get_template("bootstrap_pagination/pager.html").render(
+        template = "bootstrap_pagination/pager-bs%i.html" % get_bootstrap_version()
+
+        return get_template(template).render(
             Context({
                 'page': page,
                 'previous_label': previous_label,
@@ -220,7 +231,9 @@ class BootstrapPaginationNode(Node):
         if page.has_next():
             next_page_url = get_page_url(page.next_page_number(), context.current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name, url_get_params, url_anchor)
 
-        return get_template("bootstrap_pagination/pagination.html").render(
+        template = "bootstrap_pagination/pagination-bs%i.html" % get_bootstrap_version()
+
+        return get_template(template).render(
             Context({
                 'page': page,
                 'size': size,
