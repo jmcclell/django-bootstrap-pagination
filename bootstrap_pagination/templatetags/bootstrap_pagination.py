@@ -196,7 +196,9 @@ class BootstrapPaginationNode(Node):
         # Generate our URLs (page range + special urls for first, previous, next, and last)
         page_urls = []
         for curpage in page_range:
-            if curpage == page.paginator.num_pages:
+            if not show_index_range:
+                index_range = ""
+            elif curpage == page.paginator.num_pages:
                 index_range = "%s-%s" % (1 + (curpage - 1) * page.paginator.per_page, len(page.paginator.object_list), )
             else:
                 index_range = "%s-%s" % (1 + (curpage - 1) * page.paginator.per_page, curpage * page.paginator.per_page, )
