@@ -1,16 +1,14 @@
-import re
-
 import django
 from django.core.urlresolvers import reverse, NoReverseMatch
-from django.template import Node, Library, TemplateSyntaxError, VariableDoesNotExist
+from django.template import Node, Library, TemplateSyntaxError
 from django.template.loader import get_template
 from django.conf import settings
 from django.http import QueryDict
 from django.utils.html import mark_safe
 
 
-# As of django 1.10, template rendering no longer accepts a context, but 
-# instead accepts only accepts a dict. Up until django 1.8, a context was 
+# As of django 1.10, template rendering no longer accepts a context, but
+# instead accepts only accepts a dict. Up until django 1.8, a context was
 # actually required. Fortunately Context takes a single dict parameter,
 # so for django >=1.9 we can get away with just passing a unit function.
 if django.VERSION < (1, 9, 0):
@@ -23,45 +21,112 @@ else:
 register = Library()
 
 
-def strToBool(val):
-    """
-    Helper function to turn a string representation of "true" into
-    boolean True.
-    """
-    return val.lower() == "true"
+class ArgumentResolver():
 
+    def __init__(self, context, kwargs):
+        self.context = context
+        self.kwargs = kwargs
+        self.resolved = {}
 
-def get_page_url(page_num, current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name, url_get_params, url_anchor):
-    """
-    Helper function to return a valid URL string given the template tag parameters
-    """
-    if url_view_name is not None:
-        # Add page param to the kwargs list. Overrides any previously set parameter of the same name.
-        url_extra_kwargs[url_param_name] = page_num
-
-       # This bit of code comes from the default django url tag
+    def get(self, arg_name, default=None):
         try:
-            url = reverse(url_view_name, args=url_extra_args, kwargs=url_extra_kwargs, current_app=current_app)
-        except NoReverseMatch as e:
-            if settings.SETTINGS_MODULE:
-                project_name = settings.SETTINGS_MODULE.split('.')[0]
-                url = reverse(project_name + '.' + url_view_name, args=url_extra_args, kwargs=url_extra_kwargs, current_app=current_app)
-            else:
-                raise e
+            return self.resolved[arg_name]
+        except KeyError:
+            pass  # not yet resolved
 
-    else:
-        url = ''
-        url_get_params = url_get_params or QueryDict(url)
-        url_get_params = url_get_params.copy()
-        url_get_params[url_param_name] = page_num
+        try:
+            value = self.kwargs[arg_name]
+        except KeyError:
+            return default
 
-    if (len(url_get_params) > 0):
-        url += '?' + url_get_params.urlencode()
+        try:
+            resolve_fn = value.resolve
+        except AttributeError:
+            result = value
+        else:
+            result = resolve_fn(self.context)
 
-    if (url_anchor is not None):
-        url += '#' + url_anchor
+        # Note: deliberately not catching VariableDoesNotExist - let that
+        # bubble up though the templateing system for most debuggable errors
 
-    return url
+        self.resolved[arg_name] = result
+        return result
+
+    def get_bool(self, arg_name, default):
+        return self.get(arg_name, default) in ["true", "yes", "on", "1", True]
+
+    def get_html(self, arg_name, default):
+        return mark_safe(self.get(arg_name, default))
+
+    def page_url(self, page_num):
+        """
+        Helper function to return a valid URL string given the template tag parameters
+        """
+        request = (getattr(self.context, "request", None) or
+                   self.context.get("request"))
+
+        # Resolve the GET parameters
+        get_params = self.get("url_get_params", "")
+        param_name = str(self.get("url_param_name", "page"))
+
+        if not get_params and request:
+            get_params = request.GET.copy()
+
+        # Make sure the get_params are a mutable querydict.
+        if isinstance(get_params, QueryDict):
+            get_params = get_params.copy()
+        elif isinstance(get_params, dict):
+            new_get_params = QueryDict("", mutable=True)
+            new_get_params.update(get_params)
+            get_params = new_get_params
+        else:
+            get_params = QueryDict(get_params, mutable=True)
+
+        view_name = self.get("url_view_name")
+        if view_name:
+            extra_args = self.get("url_extra_args", [])
+            extra_kwargs = self.get("url_extra_kwargs", {})
+
+            # Add page param to the kwargs list. Overrides any previously set
+            # parameter of the same name.
+            extra_kwargs[param_name] = page_num
+
+            # Resolve current app. Over the time, current_app has moved around
+            # a bit
+            current_app = None
+            if request and django.VERSION >= (1, 8, 0):
+                current_app = getattr(request, "current_app", None)
+            elif django.VERSION < (1, 10, 0):
+                current_app = getattr(self.context, "current_app", None)
+
+            # This bit of code comes from the default django url tag
+            try:
+                url = reverse(str(view_name), args=extra_args,
+                              kwargs=extra_kwargs,
+                              current_app=current_app)
+            except NoReverseMatch as e:
+                if settings.SETTINGS_MODULE:
+                    project_name = settings.SETTINGS_MODULE.split('.')[0]
+                    url = reverse('%s.%s' % (project_name, view_name),
+                                  args=extra_args,
+                                  kwargs=extra_kwargs,
+                                  current_app=current_app)
+                else:
+                    raise e
+
+        else:
+            # No view defined. Use the GET arguments instead
+            get_params[param_name] = page_num
+            url = ''
+
+        if get_params:
+            url += '?' + get_params.urlencode()
+
+        anchor = self.get("url_anchor", None)
+        if anchor:
+            url += '#' + anchor
+
+        return url
 
 
 class BootstrapPagerNode(Node):
@@ -71,39 +136,20 @@ class BootstrapPagerNode(Node):
 
     def render(self, context):
         page = self.page.resolve(context)
-        kwargs = {}
+        args = ArgumentResolver(context, self.kwargs)
 
-         # Retrieve variable instances from context where necessary
-        for argname, argvalue in self.kwargs.items():
-            try:
-                kwargs[argname] = argvalue.resolve(context)
-            except AttributeError:
-                kwargs[argname] = argvalue
-            except VariableDoesNotExist:
-                kwargs[argname] = None
-
-        previous_label = mark_safe(kwargs.get("previous_label", "Previous Page"))
-        next_label = mark_safe(kwargs.get("next_label", "Next Page"))
-        previous_title = mark_safe(kwargs.get("previous_title", "Previous Page"))
-        next_title = mark_safe(kwargs.get("next_title", "Next Page"))
-
-        url_view_name = kwargs.get("url_view_name", None)
-        if url_view_name is not None:
-            url_view_name = str(url_view_name)
-
-        url_param_name = str(kwargs.get("url_param_name", "page"))
-        url_extra_args = kwargs.get("url_extra_args", [])
-        url_extra_kwargs = kwargs.get("url_extra_kwargs", {})
-        url_get_params = kwargs.get("url_get_params", context['request'].GET)
-        url_anchor = kwargs.get("url_anchor", None)
+        previous_label = args.get_html("previous_label", "Previous Page")
+        next_label = args.get_html("next_label", "Next Page")
+        previous_title = args.get_html("previous_title", "Previous Page")
+        next_title = args.get_html("next_title", "Next Page")
 
         previous_page_url = None
         if page.has_previous():
-            previous_page_url = get_page_url(page.previous_page_number(), context.current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name, url_get_params, url_anchor)
+            previous_page_url = args.page_url(page.previous_page_number())
 
         next_page_url = None
         if page.has_next():
-            next_page_url = get_page_url(page.next_page_number(), context.current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name, url_get_params, url_anchor)
+            previous_page_url = args.page_url(page.next_page_number())
 
         return get_template("bootstrap_pagination/pager.html").render(
             Context({
@@ -121,51 +167,35 @@ class BootstrapPaginationNode(Node):
     """
     Render the Bootstrap pagination bar with the given parameters
     """
+
     def __init__(self, page, kwargs):
         self.page = page
         self.kwargs = kwargs
 
     def render(self, context):
         page = self.page.resolve(context)
-        kwargs = {}
-
-        # Retrieve variable instances from context where necessary
-        for argname, argvalue in self.kwargs.items():
-            try:
-                kwargs[argname] = argvalue.resolve(context)
-            except AttributeError:
-                kwargs[argname] = argvalue
-            except VariableDoesNotExist:
-                kwargs[argname] = None
+        args = ArgumentResolver(context, self.kwargs)
 
         # Unpack our keyword arguments, substituting defaults where necessary
-        range_length = kwargs.get("range", None)
+        range_length = args.get("range", None)
         if range_length is not None:
             range_length = int(range_length)
 
-        size = kwargs.get("size", None)
+        size = args.get("size", None)
         if size is not None:
             size = str(size.lower())
             if size not in ["small", "large"]:
-                raise Exception("Optional argument \"size\" expecting one of \"small\", or \"large\"")
+                raise Exception("Optional argument \"size\" expecting one "
+                                "of \"small\", or \"large\"")
 
-        show_prev_next = strToBool(kwargs.get("show_prev_next", "true"))
-        previous_label = mark_safe(kwargs.get("previous_label", "&larr;"))
-        next_label = mark_safe(kwargs.get("next_label", "&rarr;"))
-        show_first_last = strToBool(kwargs.get("show_first_last", "false"))
-        first_label = mark_safe(kwargs.get("first_label", "&laquo;"))
-        last_label = mark_safe(kwargs.get("last_label", "&raquo;"))
-        show_index_range = strToBool(kwargs.get("show_index_range", "false"))
+        previous_label = args.get_html("previous_label", "&larr;")
+        next_label = args.get_html("next_label", "&rarr;")
+        first_label = args.get_html("first_label", "&laquo;")
+        last_label = args.get_html("last_label", "&raquo;")
 
-        url_view_name = kwargs.get("url_view_name", None)
-        if url_view_name is not None:
-            url_view_name = str(url_view_name)
-
-        url_param_name = str(kwargs.get("url_param_name", "page"))
-        url_extra_args = kwargs.get("url_extra_args", [])
-        url_extra_kwargs = kwargs.get("url_extra_kwargs", {})
-        url_get_params = kwargs.get("url_get_params", context['request'].GET)
-        url_anchor = kwargs.get("url_anchor", None)
+        show_prev_next = args.get_bool("show_prev_next", "true")
+        show_first_last = args.get_bool("show_first_last", "false")
+        show_index_range = args.get_bool("show_index_range", "false")
 
         # Generage our viewable page range
         page_count = page.paginator.num_pages
@@ -176,7 +206,8 @@ class BootstrapPaginationNode(Node):
             range_max = page_count
         else:
             if range_length < 1:
-                raise Exception("Optional argument \"range\" expecting integer greater than 0")
+                raise Exception("Optional argument \"range\" expecting "
+                                "integer greater than 0")
             elif range_length > page_count:
                 range_length = page_count
 
@@ -193,34 +224,29 @@ class BootstrapPaginationNode(Node):
 
         page_range = range(range_min, range_max + 1)
 
-        # Generate our URLs (page range + special urls for first, previous, next, and last)
+        # Generate our URLs (page range + special urls for first, previous,
+        # next, and last)
         page_urls = []
         for curpage in page_range:
-            if not show_index_range:
-                index_range = ""
-            elif curpage == page.paginator.num_pages:
-                index_range = "%s-%s" % (1 + (curpage - 1) * page.paginator.per_page, len(page.paginator.object_list), )
-            else:
-                index_range = "%s-%s" % (1 + (curpage - 1) * page.paginator.per_page, curpage * page.paginator.per_page, )
-                
-            url = get_page_url(curpage, context.current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name, url_get_params, url_anchor)
+            first_index = (curpage - 1) * page.paginator.per_page + 1
+            last_index = curpage * page.paginator.per_page
+
+            if curpage == page.paginator.num_pages and show_index_range:
+                last_index = len(page.paginator.object_list)
+
+            index_range = "%s-%s" % (first_index, last_index)
+
+            url = args.page_url(curpage)
             page_urls.append((curpage, index_range, url))
 
-        first_page_url = None
-        if current_page >= 1:
-            first_page_url = get_page_url(1, context.current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name, url_get_params, url_anchor)
+        first_page_url = args.page_url(1) if current_page >= 1 else None
+        last_page_url = (args.page_url(page_count)
+                         if current_page <= page_count else None)
 
-        last_page_url = None
-        if current_page <= page_count:
-            last_page_url = get_page_url(page_count, context.current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name, url_get_params, url_anchor)
-
-        previous_page_url = None
-        if page.has_previous():
-            previous_page_url = get_page_url(page.previous_page_number(), context.current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name, url_get_params, url_anchor)
-
-        next_page_url = None
-        if page.has_next():
-            next_page_url = get_page_url(page.next_page_number(), context.current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name, url_get_params, url_anchor)
+        previous_page_url = (args.page_url(page.previous_page_number())
+                             if page.has_previous() else None)
+        next_page_url = (args.page_url(page.next_page_number())
+                         if page.has_next() else None)
 
         return get_template("bootstrap_pagination/pagination.html").render(
             Context({
@@ -239,6 +265,25 @@ class BootstrapPaginationNode(Node):
                 'previous_page_url': previous_page_url,
                 'next_page_url': next_page_url
             }))
+
+
+def parse_tag(parser, token, tag):
+    bits = token.split_contents()
+    if len(bits) < 2:
+        raise TemplateSyntaxError("'%s' takes at least one argument"
+                                  " (Page object reference)" % bits[0])
+
+    page = parser.compile_filter(bits[1])
+    kwargs = {}
+    for argument in bits[2:]:
+        try:
+            name, value = argument.split('=', 1)
+        except ValueError:  # no = separator
+            raise TemplateSyntaxError("Malformed argument to %s tag" % tag)
+
+        kwargs[name] = parser.compile_filter(value)
+
+    return page, kwargs
 
 
 @register.tag
@@ -308,24 +353,7 @@ def bootstrap_paginate(parser, token):
 
         url_anchor - The anchor to use in URLs. Defaults to None.
     """
-    bits = token.split_contents()
-    if len(bits) < 2:
-        raise TemplateSyntaxError("'%s' takes at least one argument"
-                                  " (Page object reference)" % bits[0])
-    page = parser.compile_filter(bits[1])
-    kwargs = {}
-    bits = bits[2:]
-
-    kwarg_re = re.compile(r'(\w+)=(.+)')
-
-    if len(bits):
-        for bit in bits:
-            match = kwarg_re.match(bit)
-            if not match:
-                raise TemplateSyntaxError("Malformed arguments to bootstrap_pagination paginate tag")
-            name, value = match.groups()
-            kwargs[name] = parser.compile_filter(value)
-
+    page, kwargs = parse_tag(parser, token, "bootstrap_paginate")
     return BootstrapPaginationNode(page, kwargs)
 
 
@@ -376,22 +404,5 @@ def bootstrap_pager(parser, token):
 
         url_anchor - The anchor to use in URLs. Defaults to None.
     """
-    bits = token.split_contents()
-    if len(bits) < 2:
-        raise TemplateSyntaxError("'%s' takes at least one argument"
-                                  " (Page object reference)" % bits[0])
-    page = parser.compile_filter(bits[1])
-    kwargs = {}
-    bits = bits[2:]
-
-    kwarg_re = re.compile(r'(\w+)=(.+)')
-
-    if len(bits):
-        for bit in bits:
-            match = kwarg_re.match(bit)
-            if not match:
-                raise TemplateSyntaxError("Malformed arguments to bootstrap_pagination pager tag")
-            name, value = match.groups()
-            kwargs[name] = parser.compile_filter(value)
-
+    page, kwargs = parse_tag(parser, token, "bootstrap_pager")
     return BootstrapPagerNode(page, kwargs)
