@@ -1,12 +1,12 @@
-<ul class="pager">     
-      {% if page.has_previous %}     
+<ul class="pager">
+      {% if page.has_previous %}
       <li{% if not centered %} class="previous"{% endif %}>
           <a title="{{ previous_title }}" href="{{ previous_page_url|default:"#"|escape }}">{{ previous_label }}</a>
-      </li>          
+      </li>
       {% else %}
-      <li class="{% if not centered %} next{% endif %} disabled">
+      <li class="{% if not centered %}previous{% endif %} disabled">
          <span title="{{ previous_title }}">{{ previous_label }}</span>
-      </li>      
+      </li>
       {% endif %}
 
       {% if page.has_next %}
@@ -16,6 +16,6 @@
       {% else %}
       <li title="{{ next_title }}" class="{% if not centered %} next{% endif %} disabled">
          <span>{{ next_label }}</span>
-      </li>      
+      </li>
       {% endif %}
-  </ul>         
+</ul>
