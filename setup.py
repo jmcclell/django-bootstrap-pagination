@@ -10,7 +10,7 @@ setup(
     name='django-bootstrap-pagination',
     version='1.6.2',
     keywords="django bootstrap pagination templatetag",
-    author=u'Jason McClellan',
+    author='Jason McClellan',
     author_email='jason@jasonmccllelan.net',
     packages=find_packages(),
     url='https://github.com/jmcclell/django-bootstrap-pagination',
