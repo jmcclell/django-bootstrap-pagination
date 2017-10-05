@@ -44,7 +44,10 @@ def strToBool(val):
     Helper function to turn a string representation of "true" into
     boolean True.
     """
-    return val.lower() == "true"
+    if isinstance(val, str):
+        val = val.lower()
+
+    return val in ['true', 'on', 'yes', True]
 
 
 def get_page_url(page_num, current_app, url_view_name, url_extra_args, url_extra_kwargs, url_param_name, url_get_params, url_anchor):
@@ -71,7 +74,11 @@ def get_page_url(page_num, current_app, url_view_name, url_extra_args, url_extra
         url_get_params = url_get_params.copy()
         url_get_params[url_param_name] = page_num
 
-    if (len(url_get_params) > 0):
+    if len(url_get_params) > 0:
+        if not isinstance(url_get_params, QueryDict):
+            tmp = QueryDict(mutable=True)
+            tmp.update(url_get_params)
+            url_get_params = tmp
         url += '?' + url_get_params.urlencode()
 
     if (url_anchor is not None):
