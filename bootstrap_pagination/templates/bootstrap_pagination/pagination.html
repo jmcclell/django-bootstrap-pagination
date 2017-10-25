@@ -1,57 +1,57 @@
 {% load bootstrap_pagination %}
-<ul class="pagination{% if size == "small" %} pagination-sm{% endif %}{% if size == "large" %} pagination-lg{% endif %}{% block extra_classes %}{% endblock %}">
+<ul class="pagination{% if size == "small" %} pagination-sm{% endif %}{% if size == "large" %} pagination-lg{% endif %}{% block extra_classes %}{% endblock %} justify-content-center">
 {% if show_first_last %}
     {% if not page.has_previous %}
-      <li class="disabled">
-        <span>{{ first_label }}</span>
+      <li class="page-item disabled">
+        <span class="page-link">{{ first_label }}</span>
       </li>
     {% else %}
-      <li>
-        <a title="First Page" href="{{ first_page_url|default:"#"|escape }}">{{first_label}}</a>
+      <li class="page-item">
+        <a class="page-link" title="First Page" href="{{ first_page_url|default:"#"|escape }}">{{first_label}}</a>
       </li>
     {% endif %}
 {% endif %}
 {% if show_prev_next %}
     {% if not page.has_previous %}
-      <li class="disabled">
-        <span title="Previous Page">{{ previous_label }}</span>
+      <li class="page-item disabled">
+        <span class="page-link" title="Previous Page">{{ previous_label }}</span>
       </li>
     {% else %}
-      <li>
-        <a title="Previous Page" href="{{ previous_page_url|default:"#"|escape }}">{{ previous_label }}</a>
+      <li class="page-item">
+        <a class="page-link" title="Previous Page" href="{{ previous_page_url|default:"#"|escape }}">{{ previous_label }}</a>
       </li>
     {% endif %}
 {% endif %}
 {% for pagenum, index_range, url in page_urls %}
     {% if page.number == pagenum %}
-        <li class="active">
-            <span title="Current Page">{% if show_index_range %} {{ index_range }} {% else %} {{ pagenum }} {%endif %}</span>
+        <li class="page-item active">
+            <span class="page-link" title="Current Page">{% if show_index_range %} {{ index_range }} {% else %} {{ pagenum }} {%endif %}</span>
         </li>
     {% else %}
-        <li>
-            <a title="Page {{ pagenum }} of {{ page.paginator.num_pages }}" href="{{ url|escape }}">{% if show_index_range %} {{ index_range }} {% else %} {{ pagenum }} {%endif %}</a>
+        <li class="page-item">
+            <a class="page-link" title="Page {{ pagenum }} of {{ page.paginator.num_pages }}" href="{{ url|escape }}">{% if show_index_range %} {{ index_range }} {% else %} {{ pagenum }} {%endif %}</a>
         </li>
     {% endif %}
 {% endfor %}
 {% if show_prev_next %}
     {% if not page.has_next %}
-      <li class="disabled">
-        <span title="Next Page">{{ next_label }}</span>
+      <li class="page-item disabled">
+        <span class="page-link" title="Next Page">{{ next_label }}</span>
       </li>
     {% else %}
-      <li>
-        <a title="Next Page" href="{{ next_page_url|default:"#"|escape }}">{{ next_label }}</a>
+      <li class="page-item">
+        <a class="page-link" title="Next Page" href="{{ next_page_url|default:"#"|escape }}">{{ next_label }}</a>
       </li>
     {% endif %}
 {% endif %}
 {% if show_first_last %}
     {% if not page.has_next %}
-      <li class="disabled">
-        <span title="Last Page" >{{ last_label }}</span>
+      <li class="page-item disabled">
+        <span class="page-link" title="Last Page" >{{ last_label }}</span>
       </li>
     {% else %}
-      <li>
-        <a title="Last Page" href="{{ last_page_url|default:"#"|escape }}">{{last_label}}</a>
+      <li class="page-item">
+        <a class="page-link" title="Last Page" href="{{ last_page_url|default:"#"|escape }}">{{last_label}}</a>
       </li>
     {% endif %}
 {% endif %}
