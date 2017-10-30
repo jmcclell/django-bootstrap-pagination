@@ -60,9 +60,18 @@ the pagination tags:
 
 Finally, make sure that you have the request context processor enabled:
 
+
 ```
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
+)
+```
+
+Django 1.8+
+
+```
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.template.context_processors.request",
 )
 ```
 
@@ -127,12 +136,12 @@ Given a url configured such as:
 ```python
     archive_index_view = ArchiveIndexView.as_view(
         date_field='date',
-        paginate_by=10,            
+        paginate_by=10,
         allow_empty=True,
         queryset=MyModel.all(),
-        template_name='example/archive.html'    
+        template_name='example/archive.html'
     )
-    
+
     urlpatterns = patterns(
         'example.views',
         url(r'^$', archive_index_view, name='archive_index'),
