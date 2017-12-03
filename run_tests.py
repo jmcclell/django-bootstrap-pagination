@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 import os
-import unittest2
+try:
+    import unittest2 as unittest
+except ImportError:
+    import unittest #python3
+
 
 import django
 
@@ -13,9 +17,9 @@ def runtests():
     except AttributeError:  # Happens before django 1.7
         pass
 
-    loader = unittest2.TestLoader()
+    loader = unittest.TestLoader()
     tests = loader.discover('tests')
-    testRunner = unittest2.runner.TextTestRunner()
+    testRunner = unittest.runner.TextTestRunner()
     result = testRunner.run(tests)
     if result.errors or result.failures:
         exit(1)

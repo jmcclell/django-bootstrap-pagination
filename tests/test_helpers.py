@@ -3,7 +3,10 @@ import django.core.urlresolvers
 import django.http
 
 import mock
-import unittest2 as unittest
+try:
+    import unittest2 as unittest
+except ImportError:
+    import unittest
 
 from bootstrap_pagination.templatetags import bootstrap_pagination
 
