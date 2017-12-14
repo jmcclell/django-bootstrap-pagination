@@ -1,11 +1,12 @@
 language: python
 python:
-  - "2.6"
   - "2.7"
   # - "3.2"  Has been dropped by many dependencies
   - "3.3"
   - "3.4"
   - "3.5"
+  - "3.6"
+
 #  - "nightly"  Fails irregularly
 #  - "pypy"  # Can't install lxml
 #  - "pypy3" # Can't install lxml
@@ -19,6 +20,10 @@ env:
    - DJANGO="Django<1.8"
    - DJANGO="Django<1.9"
    - DJANGO="Django<1.10"
+   - DJANGO="Django<1.11"
+   - DJANGO="Django<2"
+   - DJANGO="Django<2.1"
+
 install:
 # pip >=8 dropped Python 3.2 support
 - pip install "pip<8.0.0" wheel
@@ -29,6 +34,10 @@ cache:
     - $HOME/.cache/pip
 matrix:
   exclude:
+    # Python 3.6 is supported as of django 1.11
+    - {python: "3.6", env: DJANGO="Django<2"}
+    - {python: "3.6", env: DJANGO="Django<2.1"}
+
     # Python 3.5 is supported as of django 1.8
     - {python: "3.5", env: DJANGO="Django<1.3"}
     - {python: "3.5", env: DJANGO="Django<1.4"}
@@ -36,12 +45,24 @@ matrix:
     - {python: "3.5", env: DJANGO="Django<1.6"}
     - {python: "3.5", env: DJANGO="Django<1.7"}
     - {python: "3.5", env: DJANGO="Django<1.8"}
+    - {python: "3.5", env: DJANGO="Django<1.8"}
+    - {python: "3.5", env: DJANGO="Django<1.9"}
+    - {python: "3.5", env: DJANGO="Django<1.10"}
+    - {python: "3.5", env: DJANGO="Django<1.11"}
+    - {python: "3.5", env: DJANGO="Django<2"}
+    - {python: "3.5", env: DJANGO="Django<2.1"}
 
     # Python 3.4 is supported as of django 1.5
     - {python: "3.4", env: DJANGO="Django<1.3"}
     - {python: "3.4", env: DJANGO="Django<1.4"}
     - {python: "3.4", env: DJANGO="Django<1.5"}
     - {python: "3.4", env: DJANGO="Django<1.6"}
+    - {python: "3.4", env: DJANGO="Django<1.6"}
+    - {python: "3.4", env: DJANGO="Django<1.7"}
+    - {python: "3.4", env: DJANGO="Django<1.8"}
+    - {python: "3.4", env: DJANGO="Django<1.9"}
+    - {python: "3.4", env: DJANGO="Django<2"}
+    - {python: "3.4", env: DJANGO="Django<2.1"}
 
     # Python 3.3 is supported as of django 1.5, but dropped by 1.9+
     - {python: "3.3", env: DJANGO="Django<1.3"}
