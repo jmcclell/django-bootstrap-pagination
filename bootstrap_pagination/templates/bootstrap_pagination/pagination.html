@@ -1,5 +1,5 @@
 {% load bootstrap_pagination %}
-<ul class="pagination{% if size == "small" %} pagination-sm{% endif %}{% if size == "large" %} pagination-lg{% endif %}{% block extra_classes %}{% endblock %}">
+<ul class="pagination{% if size == "small" %} pagination-sm{% endif %}{% if size == "large" %} pagination-lg{% endif %} hidden-print{% block extra_classes %}{% endblock %}">
 {% if show_first_last %}
     {% if not page.has_previous %}
       <li class="disabled">
