@@ -83,7 +83,7 @@ def get_page_url(page_num, current_app, url_view_name, url_extra_args, url_extra
         url = ''
         url_get_params = url_get_params or QueryDict(url)
         url_get_params = url_get_params.copy()
-        url_get_params[url_param_name] = page_num
+        url_get_params[url_param_name] = str(page_num)
 
     if len(url_get_params) > 0:
         if not isinstance(url_get_params, QueryDict):
