@@ -61,9 +61,23 @@ the pagination tags:
 Finally, make sure that you have the request context processor enabled:
 
 ```
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.core.context_processors.request",
-)
+    # Django 1.8+
+    TEMPLATES = [
+        {
+            # ...
+            'OPTIONS': {
+                context_processors': [
+                    # ...
+                    'django.template.context_processors.request',
+                ]
+            }
+        }
+    ]
+
+    # Django < 1.8
+    TEMPLATE_CONTEXT_PROCESSORS = {
+        "django.core.context_processors.request",
+    )
 ```
 
 # bootstrap_paginate
