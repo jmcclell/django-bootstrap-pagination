@@ -1,5 +1,8 @@
 import django.conf
-import django.core.urlresolvers
+try:
+    from django.core.urlresolvers import NoReverseMatch
+except ImportError: # Django 2+
+    from django.urls import NoReverseMatch
 import django.http
 
 import mock
@@ -41,7 +44,7 @@ class TestHelpers(unittest.TestCase):
                 'reverse')
     def test_get_page_url_view_sub(self, mock_reverse):
         mock_reverse.side_effect = [
-            django.core.urlresolvers.NoReverseMatch(),
+            NoReverseMatch(),
             "/some_nice_url"
         ]
         url = bootstrap_pagination.get_page_url(
