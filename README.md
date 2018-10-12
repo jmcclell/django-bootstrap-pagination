@@ -35,10 +35,10 @@ Download the latest development version from:
 
 github @ http://www.github.com/jmcclell/django-bootstrap-pagination
 
-
 ```
     setup.py install
 ```
+
 ## Usage
 
 ### Setup
@@ -141,12 +141,12 @@ Given a url configured such as:
 ```python
     archive_index_view = ArchiveIndexView.as_view(
         date_field='date',
-        paginate_by=10,            
+        paginate_by=10,
         allow_empty=True,
         queryset=MyModel.all(),
-        template_name='example/archive.html'    
+        template_name='example/archive.html'
     )
-    
+
     urlpatterns = patterns(
         'example.views',
         url(r'^$', archive_index_view, name='archive_index'),
@@ -158,7 +158,6 @@ We could simply use the basic usage (appending ?page=#) with the *archive_index*
 as the *archive_index_view* class based generic view from django doesn't care how it gets
 the page parameter. However, if we want pretty URLs, such as those defined in the
 *archive_index_paginated* URL (ie: /page/1), we need to define the URL in our template tag:
-
 
 ```
     {% bootstrap_paginate page_obj url_view_name="archive_index_paginated" %}
