@@ -1,7 +1,6 @@
-[![Stories in Ready](https://badge.waffle.io/jmcclell/django-bootstrap-pagination.png?label=ready)](https://waffle.io/jmcclell/django-bootstrap-pagination)
 [![PyPi version](https://img.shields.io/pypi/v/django-bootstrap-pagination.svg)](https://pypi.python.org/pypi/django-bootstrap-pagination)
 [![PyPi downloads](https://img.shields.io/pypi/dm/django-bootstrap-pagination.svg)](https://pypi.python.org/pypi/django-bootstrap-pagination)
-[![Build Status](https://travis-ci.org/jmcclell/django-bootstrap-pagination.png?branch=master)](https://travis-ci.org/ondergetekende/django-bootstrap-pagination)
+[![Build Status](https://travis-ci.org/jmcclell/django-bootstrap-pagination.png?branch=master)](https://travis-ci.org/jmcclell/django-bootstrap-pagination)
 
 
 ## Django Bootstrap Pagination

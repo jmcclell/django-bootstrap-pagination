@@ -5,7 +5,7 @@ from distutils.core import setup
 from setuptools import find_packages
 
 
-with open(os.path.join(os.path.dirname(__file__), 'README.rst'), 'rb') as readme:
+with open(os.path.join(os.path.dirname(__file__), 'README.md'), 'rb') as readme:
     readme_text = readme.read().decode('utf-8')
 
 # allow setup.py to be run from any path
@@ -22,6 +22,7 @@ setup(
     license='MIT licence, see LICENCE',
     description='Render Django Page objects as Bootstrap 3.x/4.x Pagination compatible HTML',
     long_description=readme_text,
+    long_description_content_type='text/markdown',
     zip_safe=False,
     include_package_data=True,
     classifiers=[
