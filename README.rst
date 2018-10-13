@@ -127,6 +127,12 @@ url_extra_kwargs
   there is a named "page" argument in the URL referenced by **url_view_name**. This allows
   us to use pretty pagination URLs such as "/page/1"
 
+extra_pagination_classes
+  A space separated list of CSS class names that will be added to the top level
+  <ul> HTML element. In particular, this can be utilized in Bootstrap 4
+  installations to add the appropriate alignment classes from Flexbox utilities,
+  eg: justify-content-center
+
 **Basic Usage**
 
 The following will show a pagination bar with a link to every page, a previous link, and a next link:

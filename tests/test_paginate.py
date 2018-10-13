@@ -31,7 +31,7 @@ class PaginateTestCase(unittest.TestCase):
         c = Context({'page_obj': paginator.page(2),
                      'request': django.http.HttpRequest()})
         html = lxml.html.fragment_fromstring(template.render(c))
-        self.assertEqual(html.get('class'), 'pagination')
+        self.assertEqual(html.get('class').strip(), 'pagination')
         self.assertEqual(
             html.cssselect('[title=\"Current Page\"]')[0].text.strip(),
             '2')

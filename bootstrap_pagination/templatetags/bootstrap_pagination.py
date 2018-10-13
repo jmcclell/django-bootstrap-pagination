@@ -201,6 +201,8 @@ class BootstrapPaginationNode(Node):
         url_get_params = kwargs.get("url_get_params", context['request'].GET)
         url_anchor = kwargs.get("url_anchor", None)
 
+        extra_pagination_classes = kwargs.get("extra_pagination_classes", "")
+
         # Generage our viewable page range
         page_count = page.paginator.num_pages
         current_page = page.number
@@ -271,7 +273,8 @@ class BootstrapPaginationNode(Node):
                 'first_page_url': first_page_url,
                 'last_page_url': last_page_url,
                 'previous_page_url': previous_page_url,
-                'next_page_url': next_page_url
+                'next_page_url': next_page_url,
+                'extra_pagination_classes': extra_pagination_classes,
             }))
 
 
@@ -329,8 +332,8 @@ def bootstrap_paginate(parser, token):
                          the URL.
 
         url_extra_args - This is used only in conjunction with url_name.
-                        When referencing a URL, additional arguments may be
-                        passed in as a list.
+                         When referencing a URL, additional arguments may be
+                         passed in as a list.
 
         url_extra_kwargs - This is used only in conjunction with url_name.
                            When referencing a URL, additional named arguments
@@ -341,6 +344,13 @@ def bootstrap_paginate(parser, token):
                          filters.
 
         url_anchor - The anchor to use in URLs. Defaults to None.
+
+        extra_pagination_classes - A space separated list of CSS class names
+                                   that will be added to the top level <ul>
+                                   HTML element. In particular, this can be
+                                   utilized in Bootstrap 4 installatinos  to
+                                   add the appropriate alignment classes from
+                                   Flexbox utilites, eg:  justify-content-center
     """
     bits = token.split_contents()
     if len(bits) < 2:
