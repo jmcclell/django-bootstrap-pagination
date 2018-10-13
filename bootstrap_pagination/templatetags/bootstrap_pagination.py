@@ -285,7 +285,7 @@ class BootstrapPaginationNode(Node):
 def bootstrap_paginate(parser, token):
     """
     Renders a Page object as a Twitter Bootstrap styled pagination bar.
-    Compatible with Bootstrap 3.x only.
+    Compatible with Bootstrap 3.x and 4.x only.
 
     Example::
 
@@ -323,22 +323,22 @@ def bootstrap_paginate(parser, token):
         last_label - The text to display for the last page link. Defaults to
                      "&raquo;"
 
-        url_name - The named URL to use. Defaults to None. If None, then the
-                   default template simply appends the url parameter as a
-                   relative URL link, eg: <a href="?page=1">1</a>
+        url_view_name - The named URL to use. Defaults to None. If None, then the
+                        default template simply appends the url parameter as a
+                        relative URL link, eg: <a href="?page=1">1</a>
 
         url_param_name - The name of the parameter to use in the URL. If
-                         url_name is set to None, this string is used as the
+                         url_view_name is set to None, this string is used as the
                          parameter name in the relative URL path. If a URL
                          name is specified, this string is used as the
                          parameter name passed into the reverse() method for
                          the URL.
 
-        url_extra_args - This is used only in conjunction with url_name.
+        url_extra_args - This is used only in conjunction with url_view_name.
                          When referencing a URL, additional arguments may be
                          passed in as a list.
 
-        url_extra_kwargs - This is used only in conjunction with url_name.
+        url_extra_kwargs - This is used only in conjunction with url_view_name.
                            When referencing a URL, additional named arguments
                            may be passed in as a dictionary.
 
@@ -380,7 +380,7 @@ def bootstrap_paginate(parser, token):
 def bootstrap_pager(parser, token):
     """
     Renders a Page object as a Twitter Bootstrap styled pager bar.
-    Compatible with Bootstrap 2.x only.
+    Compatible with Bootstrap 2.x and 3.x only.
 
     Example::
 
@@ -398,22 +398,22 @@ def bootstrap_pager(parser, token):
 
         next_title - The link title for the next link (defaults to "Next Page")
 
-        url_name - The named URL to use. Defaults to None. If None, then the
-                   default template simply appends the url parameter as a
-                   relative URL link, eg: <a href="?page=1">1</a>
+        url_view_name - The named URL to use. Defaults to None. If None, then the
+                        default template simply appends the url parameter as a
+                        relative URL link, eg: <a href="?page=1">1</a>
 
         url_param_name - The name of the parameter to use in the URL. If
-                         url_name is set to None, this string is used as the
+                         url_view_name is set to None, this string is used as the
                          parameter name in the relative URL path. If a URL
                          name is specified, this string is used as the
                          parameter name passed into the reverse() method for
                          the URL.
 
-        url_extra_args - This is used only in conjunction with url_name.
+        url_extra_args - This is used only in conjunction with url_view_name.
                         When referencing a URL, additional arguments may be
                         passed in as a list.
 
-        url_extra_kwargs - This is used only in conjunction with url_name.
+        url_extra_kwargs - This is used only in conjunction with url_view_name.
                            When referencing a URL, additional named arguments
                            may be passed in as a dictionary.
 
