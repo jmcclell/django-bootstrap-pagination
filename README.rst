@@ -9,10 +9,25 @@ work seamlessly with Django Page objects. By passing in a Page object and
 one or more optional arguments, Bootstrap pagination bars and pagers can
 be rendered with very little effort.
 
-Compatible with Django 1.3+
+**Bootstrap Compatibility**
 
-.. contents ::
++------------------+---------------------+--------------------------------------------------------+
+| Versions         | Bootstrap Versions  | Notes                                                  |
++==================+=====================+========================================================+
+| < 1.1.0          | 2.x                 |                                                        |
++------------------+---------------------+--------------------------------------------------------+
+| > 1.1.0, < 1.7.0 | 3.x                 |                                                        |
++------------------+---------------------+--------------------------------------------------------+
+| >= 1.7.0         | 3.x, 4.x            | bootstrap_pager is only compatible with Bootstrap  3.x |
++------------------+---------------------+--------------------------------------------------------+
 
+
+This application serves to make using Twitter's Bootstrap Pagination styles
+work seamlessly with Django Page objects. By passing in a Page object and
+one or more optional arguments, Bootstrap pagination bars and pagers can
+be rendered with very little effort.
+
+Compatible with Django **1.2+**
 ------------
 Installation
 ------------
