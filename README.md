@@ -92,39 +92,39 @@ Finally, make sure that you have the request context processor enabled:
 
 - **range** - Defines the maximum number of page links to show
 - **show_prev_next** - Boolean. Defines whether or not to show the Previous and Next
-                       links. (Accepts "true" or "false")
+                       links. (Accepts `"true"` or `"false"`)
 - **previous_label** - The label to use for the Previous link
 - **next_label** - The label to use for the Next link
 - **show_first_last** - Boolean. Defines whether or not to show the First and Last links.
-                       (Accepts "true" or "false")
+                       (Accepts `"true"` or `"false"`)
 - **first_label** - The label to use for the First page link
 - **last_label** - The label to use for the Last page link
 - **show_index_range** - Boolean, defaults to "false". If "true" shows index range of items instead of page numbers in the paginator. For example, if paginator is configured for 50 items per page, show_index_range="true" will display [1-50, 51-100, **101-150**, 151-200, 201-250, etc.] rather than [1, 2, **3**, 4, 5, etc.].
-- **url_view_name** - A named URL reference (such as one that might get passed inti the URL
+- **url_view_name** - A named URL reference (such as one that might get passed into the URL
                       template tag) to use as the URL template. Must be resolvable by the
-                      reverse() function. **If this option is not specified, the tag simply
-                      uses a relative url such as "?page=1" which is fine in most situations**
-- **url_param_name** - Determines the name of the GET parameter for the page number. Th
-                       default is "page". If no **url_view_name** is defined, this string
-                       is appended to the url as "?{{url_param_name}}=1".
+                      `reverse()` function. **If this option is not specified, the tag simply
+                      uses a relative url such as `?page=1` which is fine in most situations**
+- **url_param_name** - Determines the name of the `GET` parameter for the page number. The
+                       default is `"page"`. If no **url_view_name** is defined, this string
+                       is appended to the url as `?{{url_param_name}}=1`.
 - **url_extra_args** - **Only valid when url_view_name is set.** Additional arguments to
-                       pass into reverse() to resolve the URL.
-- **url_extra_kwargs** - **Only valid when url_view_name is set.** Additional named
-                         arguments to pass into reverse() to resolve the URL. Additionally,
+                       pass into `reverse()` to resolve the URL.
+- **url_extra_kwargs** - **Only valid when `url_view_name` is set.** Additional named
+                         arguments to pass into `reverse()` to resolve the URL. Additionally,
                          the template tag will add an extra parameter to this for the
                          page, as it is assumed that if given a url_name, the page will
                          be a named variable in the URL regular expression. In this case,
-                         the **url_param_name** continues to be the string used to represent
-                         the name. That is, by default, **url_param_name** is equal to "page"
-                         and thus it is expected that there is a named "page" argument in the
-                         URL referenced by **url_view_name**. This allows us to use pretty
-                         pagination URLs such as "/page/1"
+                         the `url_param_name` continues to be the string used to represent
+                         the name. That is, by default, `url_param_name` is equal to `page`
+                         and thus it is expected that there is a named `page` argument in the
+                         URL referenced by `url_view_name`. This allows us to use pretty
+                         pagination URLs such as `/page/1`
 - *extra_pagination_classes* - A space separated list of CSS class names that
-                             will be added to the top level <ul> HTML element.
+                             will be added to the top level `<ul>` HTML element.
                              In particular, this can be utilized in Bootstrap 4
                              installations to add the appropriate alignment
                              classes from Flexbox utilities: eg:
-                             justify-content-center
+                             `justify-content-center`
                              
 
 **Basic Usage**
@@ -195,28 +195,28 @@ simply provides a Previous and Next link.
 - **next_title** - Defines the link title for the next link
 - **centered** - Boolean. Defines whether or not the links are centered. Defaults to false.
                  (Accepts "true" or "false")
-- **url_view_name** - A named URL reference (such as one that might get passed inti the URL
+- **url_view_name** - A named URL reference (such as one that might get passed into the URL
                       template tag) to use as the URL template. Must be resolvable by the
-                      reverse() function. **If this option is not specified, the tag simply
-                      uses a relative url such as "?page=1" which is fine in most situations**
-- **url_param_name** - Determines the name of the GET parameter for the page number. Th
-                       default is "page". If no **url_view_name** is defined, this string
-                       is appended to the url as "?{{url_param_name}}=1".
-- **url_extra_args** - **Only valid when url_view_name is set.** Additional arguments to
-                       pass into reverse() to resolve the URL.
-- **url_extra_kwargs** - **Only valid when url_view_name is set.** Additional named
-                         arguments to pass into reverse() to resolve the URL. Additionally,
+                      `reverse()` function. **If this option is not specified, the tag simply
+                      uses a relative url such as `?page=1` which is fine in most situations**
+- **url_param_name** - Determines the name of the `GET` parameter for the page number. Th
+                       default is `"page"`. If no `url_view_name` is defined, this string
+                       is appended to the url as `?{{url_param_name}}=1`.
+- **url_extra_args** - **Only valid when `url_view_name` is set.** Additional arguments to
+                       pass into `reverse()` to resolve the URL.
+- **url_extra_kwargs** - **Only valid when `url_view_name` is set.** Additional named
+                         arguments to pass into `reverse()` to resolve the URL. Additionally,
                          the template tag will add an extra parameter to this for the
                          page, as it is assumed that if given a url_name, the page will
                          be a named variable in the URL regular expression. In this case,
-                         the **url_param_name** continues to be the string used to represent
-                         the name. That is, by default, **url_param_name** is equal to "page"
-                         and thus it is expected that there is a named "page" argument in the
-                         URL referenced by **url_view_name**. This allows us to use pretty
-                         pagination URLs such as "/page/1"
-- **url_anchor** - The anchor to use in URLs. Defaults to None
+                         the `url_param_name` continues to be the string used to represent
+                         the name. That is, by default, `url_param_name` is equal to `"page"`
+                         and thus it is expected that there is a named `page` argument in the
+                         URL referenced by `url_view_name`. This allows us to use pretty
+                         pagination URLs such as `/page/1`
+- **url_anchor** - The anchor to use in URLs. Defaults to `None`
 - *extra_pager_classes* - A space separated list of CSS class names that will be added
-                to the top level <ul> HTML element. This could be used to, as an
+                to the top level `<ul>` HTML element. This could be used to, as an
                 example, add a class  to prevent the pager from showing up when
                 printing.
 
