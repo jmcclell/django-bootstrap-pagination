@@ -13,14 +13,14 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-bootstrap-pagination',
-    version='1.6.4',
+    version='1.7.0',
     keywords="django bootstrap pagination templatetag",
     author=u'Jason McClellan<jason@jasonmcclellan.io>, Koert van der Veer<koert@ondergetekende.nl>',
     author_email='jason@jasonmccllelan.io',
     packages=find_packages(),
     url='https://github.com/jmcclell/django-bootstrap-pagination',
     license='MIT licence, see LICENCE',
-    description='Render Django Page objects as Bootstrap 3.x Pagination compatible HTML',
+    description='Render Django Page objects as Bootstrap 3.x/4.x Pagination compatible HTML',
     long_description=readme_text,
     zip_safe=False,
     include_package_data=True,
