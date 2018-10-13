@@ -1,4 +1,4 @@
-<ul class="pager">
+<ul class="pager {{ extra_pager_classes }}">
       {% if page.has_previous %}
       <li{% if not centered %} class="previous"{% endif %}>
           <a title="{{ previous_title }}" href="{{ previous_page_url|default:"#"|escape }}">{{ previous_label }}</a>

@@ -31,4 +31,4 @@ class PagerTestCase(unittest.TestCase):
         c = Context({'page_obj': paginator.page(2),
                      'request': django.http.HttpRequest()})
         html = lxml.html.fragment_fromstring(template.render(c))
-        self.assertEqual(html.get('class'), 'pager')
+        self.assertEqual(html.get('class').strip(), 'pager')

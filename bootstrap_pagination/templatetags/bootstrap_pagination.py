@@ -131,6 +131,8 @@ class BootstrapPagerNode(Node):
         url_get_params = kwargs.get("url_get_params", context['request'].GET)
         url_anchor = kwargs.get("url_anchor", None)
 
+        extra_pager_classes = kwargs.get("extra_pager_classes", "")
+
         previous_page_url = None
         if page.has_previous():
             previous_page_url = get_page_url(page.previous_page_number(), get_current_app(context), url_view_name, url_extra_args, url_extra_kwargs, url_param_name, url_get_params, url_anchor)
@@ -147,7 +149,8 @@ class BootstrapPagerNode(Node):
                 'previous_title': previous_title,
                 'next_title': next_title,
                 'previous_page_url': previous_page_url,
-                'next_page_url': next_page_url
+                'next_page_url': next_page_url,
+                'extra_pager_classes': extra_pager_classes,
             }))
 
 
@@ -419,6 +422,12 @@ def bootstrap_pager(parser, token):
                          filters.
 
         url_anchor - The anchor to use in URLs. Defaults to None.
+
+        extra_pager_classes - A space separated list of CSS class names
+                              that will be added to the top level <ul>
+                              HTML element. This could be  used to,
+                              as an example, add a class to prevent
+                              the pager from showing up when printing.
     """
     bits = token.split_contents()
     if len(bits) < 2:
