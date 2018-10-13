@@ -1,17 +1,22 @@
 # -*- coding: utf-8 -*-
+import os
+
 from distutils.core import setup
 from setuptools import find_packages
 
 
-with open('README.rst', 'rb') as readme:
+with open(os.path.join(os.path.dirname(__file__), 'README.rst'), 'rb') as readme:
     readme_text = readme.read().decode('utf-8')
+
+# allow setup.py to be run from any path
+os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-bootstrap-pagination',
     version='1.6.4',
     keywords="django bootstrap pagination templatetag",
     author=u'Jason McClellan',
-    author_email='jason@jasonmccllelan.net',
+    author_email='jason@jasonmccllelan.io',
     packages=find_packages(),
     url='https://github.com/jmcclell/django-bootstrap-pagination',
     license='MIT licence, see LICENCE',
@@ -20,7 +25,7 @@ setup(
     zip_safe=False,
     include_package_data=True,
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Framework :: Django",
