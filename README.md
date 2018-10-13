@@ -183,7 +183,7 @@ would pass them in using the optional arguments **url_extra_args** and **url_ext
 Likewise, if our page parameter had a different name, we would pass in a different
 **url_param_name** argument to the template tag.
 
-#bootstrap_pager
+# bootstrap_pager
 
 A much simpler implementation of the Bootstrap Pagination functionality is the Pager, which
 simply provides a Previous and Next link.
