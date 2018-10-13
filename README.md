@@ -119,7 +119,7 @@ Finally, make sure that you have the request context processor enabled:
                          and thus it is expected that there is a named `page` argument in the
                          URL referenced by `url_view_name`. This allows us to use pretty
                          pagination URLs such as `/page/1`
-- *extra_pagination_classes* - A space separated list of CSS class names that
+- **extra_pagination_classes** - A space separated list of CSS class names that
                              will be added to the top level `<ul>` HTML element.
                              In particular, this can be utilized in Bootstrap 4
                              installations to add the appropriate alignment
@@ -215,7 +215,7 @@ simply provides a Previous and Next link.
                          URL referenced by `url_view_name`. This allows us to use pretty
                          pagination URLs such as `/page/1`
 - **url_anchor** - The anchor to use in URLs. Defaults to `None`
-- *extra_pager_classes* - A space separated list of CSS class names that will be added
+- **extra_pager_classes** - A space separated list of CSS class names that will be added
                 to the top level `<ul>` HTML element. This could be used to, as an
                 example, add a class  to prevent the pager from showing up when
                 printing.
