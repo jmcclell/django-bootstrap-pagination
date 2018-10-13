@@ -58,7 +58,12 @@ class TestHelpers(unittest.TestCase):
             url_anchor="derp")
 
         self.assertEqual(url, '/some_nice_url#derp')
-        mock_reverse.assert_called_with('tests.the_view',
+        if django.VERSION < (1, 9, 0):
+            sep = '.'
+        else:
+            sep = ':'
+
+        mock_reverse.assert_called_with('tests' + sep  + 'the_view',
                                         args=['arg1'],
                                         current_app='the_current_app',
                                         kwargs={'kwarg': 'yes',

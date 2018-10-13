@@ -61,15 +61,23 @@ def get_page_url(page_num, current_app, url_view_name, url_extra_args, url_extra
         # Add page param to the kwargs list. Overrides any previously set parameter of the same name.
         url_extra_kwargs[url_param_name] = page_num
 
-       # This bit of code comes from the default django url tag
         try:
             url = reverse(url_view_name, args=url_extra_args, kwargs=url_extra_kwargs, current_app=current_app)
-        except NoReverseMatch as e:  # dotted method deprecated since 1.8
+        except NoReverseMatch as e:  # Attempt to load view from application root, allowing the use of non-namespaced view names if your view is defined in the root application
             if settings.SETTINGS_MODULE:
+
+                if django.VERSION < (1, 9, 0):
+                    separator  = '.'
+                else:
+                    separator  = ':' # Namespace separator changed to colon after 1.8
+
                 project_name = settings.SETTINGS_MODULE.split('.')[0]
-                url = reverse(project_name + '.' + url_view_name, args=url_extra_args, kwargs=url_extra_kwargs, current_app=current_app)
+                try:
+                    url = reverse(project_name + separator + url_view_name, args=url_extra_args, kwargs=url_extra_kwargs, current_app=current_app)
+                except NoReverseMatch:
+                    raise e # Raise the original exception so the error message doesn't confusingly include something the Developer didn't add to the view name themselves
             else:
-                raise e
+                raise e # We can't determine the project name so just re-throw the exception
 
     else:
         url = ''
