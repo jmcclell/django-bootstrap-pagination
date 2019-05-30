@@ -21,18 +21,18 @@ msgstr ""
 
 #: templates/bootstrap_pagination/pagination.html:12
 msgid "First Page"
-msgstr "Первая Страница"
+msgstr "Первая страница"
 
 #: templates/bootstrap_pagination/pagination.html:19
 #: templates/bootstrap_pagination/pagination.html:23
 #: templatetags/bootstrap_pagination.py:102
 #: templatetags/bootstrap_pagination.py:104
 msgid "Previous Page"
-msgstr "Предыдущая Страница"
+msgstr "Предыдущая страница"
 
 #: templates/bootstrap_pagination/pagination.html:30
 msgid "Current Page"
-msgstr "Текущая Страница"
+msgstr "Текущая страница"
 
 #: templates/bootstrap_pagination/pagination.html:34
 msgid "Page"
@@ -43,12 +43,12 @@ msgstr "Страница"
 #: templatetags/bootstrap_pagination.py:103
 #: templatetags/bootstrap_pagination.py:105
 msgid "Next Page"
-msgstr "Следующая Страница"
+msgstr "Следующая страница"
 
 #: templates/bootstrap_pagination/pagination.html:52
 #: templates/bootstrap_pagination/pagination.html:56
 msgid "Last Page"
-msgstr "Последняя Страница"
+msgstr "Последняя страница"
 
 msgid "of"
 msgstr "из"
