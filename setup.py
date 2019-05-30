@@ -13,7 +13,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-bootstrap-pagination',
-    version='1.7.0',
+    version='1.7.1',
     keywords="django bootstrap pagination templatetag",
     author=u'Jason McClellan<jason@jasonmcclellan.io>, Koert van der Veer<koert@ondergetekende.nl>',
     author_email='jason@jasonmccllelan.io',
