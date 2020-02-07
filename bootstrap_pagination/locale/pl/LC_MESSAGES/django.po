@@ -1,0 +1,57 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-07 03:27+0100\n"
+"PO-Revision-Date: 2020-02-07 03:28+0100\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#: templates/bootstrap_pagination/pagination.html:7
+#: templates/bootstrap_pagination/pagination.html:11
+msgid "First Page"
+msgstr "Pierwsza strona"
+
+#: templates/bootstrap_pagination/pagination.html:18
+#: templates/bootstrap_pagination/pagination.html:22
+#: templatetags/bootstrap_pagination.py:120
+#: templatetags/bootstrap_pagination.py:122
+msgid "Previous Page"
+msgstr "Poprzednia strona"
+
+#: templates/bootstrap_pagination/pagination.html:29
+msgid "Current Page"
+msgstr "Obecna strona"
+
+#: templates/bootstrap_pagination/pagination.html:33
+msgid "Page"
+msgstr "Strona"
+
+#: templates/bootstrap_pagination/pagination.html:33
+msgid "of"
+msgstr "z"
+
+#: templates/bootstrap_pagination/pagination.html:40
+#: templates/bootstrap_pagination/pagination.html:44
+#: templatetags/bootstrap_pagination.py:121
+#: templatetags/bootstrap_pagination.py:123
+msgid "Next Page"
+msgstr "Następna strona"
+
+#: templates/bootstrap_pagination/pagination.html:51
+#: templates/bootstrap_pagination/pagination.html:55
+msgid "Last Page"
+msgstr "Ostatnia strona"
