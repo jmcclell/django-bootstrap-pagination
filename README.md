@@ -1,3 +1,13 @@
+# Project No Longer Maintained
+
+This project lived a long and useful life, but it's been inactive for quite some time and I believe its relevancy has faded.
+
+It will remain here on Github in a read-only, archived state but there will be no more updates.
+
+
+
+
+
 [![PyPi version](https://img.shields.io/pypi/v/django-bootstrap-pagination.svg)](https://pypi.python.org/pypi/django-bootstrap-pagination)
 [![PyPi downloads](https://img.shields.io/pypi/dm/django-bootstrap-pagination.svg)](https://pypi.python.org/pypi/django-bootstrap-pagination)
 [![Build Status](https://travis-ci.org/jmcclell/django-bootstrap-pagination.png?branch=master)](https://travis-ci.org/jmcclell/django-bootstrap-pagination)
@@ -125,7 +135,7 @@ Finally, make sure that you have the request context processor enabled:
                              installations to add the appropriate alignment
                              classes from Flexbox utilities: eg:
                              `justify-content-center`
-                             
+
 
 **Basic Usage**
 
